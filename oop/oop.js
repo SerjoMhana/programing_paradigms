@@ -1,31 +1,44 @@
-    class AreaCalculator {
-        constructor(length, width) {
-        this.length = length;
-        this.width = width;
+
+    class Calculator {
+        constructor() {
+        this.num1 = 0;
+        this.num2 = 0;
+        this.method = "Square";
+        this.area = 0;
+        }
+    
+        setNum1(value) {
+        this.num1 = value;
+        }
+    
+        setNum2(value) {
+        this.num2 = value;
+        }
+    
+        setMethod(value) {
+        this.method = value;
         }
     
         calculateArea() {
-        return this.length * this.width;
+        if (this.method === "Square") {
+            this.area = this.num1 * this.num1;
+        } else if (this.method === "rectangular") {
+            this.area = this.num1 * this.num2;
+        } else if (this.method === "triangle") {
+            this.area = (this.num1 * this.num2) / 2;
+        }
         }
     }
     
-    class Form {
-        constructor() {
-        this.submitButton = document.getElementById('submit');
-        this.lengthInput = document.getElementById('length');
-        this.widthInput = document.getElementById('width');
-        this.areaOutput = document.getElementById('The_area');
-        this.areaCalculator = new AreaCalculator();
-        this.submitButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            this.areaCalculator.length = this.lengthInput.value;
-            this.areaCalculator.width = this.widthInput.value;
-            this.areaOutput.innerHTML = `The area is ${this.areaCalculator.calculateArea()}`;
-        });
-        }
-    }
+    const calculator = new Calculator();
     
-    document.addEventListener('DOMContentLoaded', () => {
-        new Form();
+    const calculateButton = document.getElementById("calculate");
+    calculateButton.addEventListener("click", function() {
+        calculator.setNum1(document.getElementById("num1").value);
+        calculator.setNum2(document.getElementById("num2").value);
+        calculator.setMethod(document.querySelector('input[name="method"]:checked').value);
+    
+        calculator.calculateArea();
+    
+        document.querySelector(".answer").innerText = calculator.area;
     });
-  
